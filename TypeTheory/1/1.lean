@@ -16,6 +16,10 @@ open Real
 
 #check (fun x ↦ sin x)
 
+#check sin
+
+#check ℝ 
+
 #check Type
 
 #check Type 1
