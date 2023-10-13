@@ -1,1 +1,1 @@
-def hello := "world"
+import TypeTheory.L1.ex
