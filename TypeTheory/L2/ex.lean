@@ -139,12 +139,18 @@ variable (A B : Type u) (a : A) (b : B)
 
 -- Eliminator (non-dependent version)
 
+section
+
 variable (C : Type u) (f : A → B → C) (x : A × B)
 
 #check (rec f x : C)
 
 #check (rec f : A × B → C)
 
+
+-- Computation rule
+
+example (a : A) (b : B) : rec f (a, b) = f a b := rfl 
 
 -- Projections
 
@@ -158,8 +164,64 @@ variable (C : Type u) (f : A → B → C) (x : A × B)
 
 example : fst (a, b) = a := rfl
 
+end
+
 -- Uniqueness principle
 
+section
+
+variable (C : Type u) (x : A × B)
+
 example : x = (x.1, x.2) := rfl
+
+lemma principle (f : A → B → C) : (rec f : A × B → C) = fun (x : A × B) ↦ f x.1 x.2 := rfl
+
+#print axioms principle
+
+lemma principle1 (f : A → B → C) : (rec f : A × B → C) = fun (x : A × B) ↦ f x.1 x.2 := by
+  ext x
+  rfl
+
+#print axioms principle1
+
+lemma principle2 (f : A → B → C) : (rec f : A × B → C) = fun (x : A × B) ↦ f x.1 x.2 := by
+  have h₁ : f = fun t ↦ f t := rfl
+  nth_rewrite 2 [h₁]
+  change (fun (t : A × B) ↦ f t.1 t.2) = _
+  rfl
+
+#print axioms principle2
+
+lemma principle3 (f : A × B → C) : f = fun (x : A × B) ↦ f (x.1, x.2) := rfl
+
+#print axioms principle3
+
+lemma principle4 (f : A × B → C) : f = fun (x : A × B) ↦ f (x.1, x.2) := by
+  change (fun t ↦ f t) = fun x ↦ f x
+  rfl
+
+#print axioms principle4
+
+end
+
+-- Eliminator (dependent version)
+
+section
+
+variable (C : A × B → Type u) (f : (a : A) → (b : B) → C (a, b)) (x : A × B)
+
+#check (rec f x : C x)
+
+#check (rec f : (x : A × B) → C x)
+
+-- Computation rule
+
+example (a : A) (b : B) : rec f (a, b) = f a b := rfl 
+
+lemma principle5 : (rec f : (x : A × B) → C x) = fun (x : A × B) ↦ f x.1 x.2 := rfl
+
+lemma principle6 (f : (x : A × B) → C x) : f = fun (x : A × B) ↦ f (x.1, x.2) := rfl
+
+end
 
 end
