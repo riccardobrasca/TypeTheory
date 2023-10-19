@@ -4,6 +4,8 @@ open scoped Real
 
 open Real
 
+notation R "^" n => (Fin n → R) -- notation to use ℝ^n as a type
+
 universe u
 
 section
@@ -71,8 +73,6 @@ section
 section
 
 variable (n : ℕ)
-
-notation R "^" n => (Fin n → R) -- notation to use ℝ^n as a type
 
 #check ℝ^n
 
@@ -214,6 +214,11 @@ variable (C : A × B → Type u) (f : (a : A) → (b : B) → C (a, b)) (x : A �
 
 #check (rec f : (x : A × B) → C x)
 
+noncomputable --ignore this
+def function := fun (x : ℝ × ℕ) ↦ (x.1 • (1 : ℝ^x.2)) 
+
+#check (function : (x : ℝ × ℕ) → ℝ^x.2)
+
 -- Computation rule
 
 example (a : A) (b : B) : rec f (a, b) = f a b := rfl 
@@ -221,6 +226,79 @@ example (a : A) (b : B) : rec f (a, b) = f a b := rfl
 lemma principle5 : (rec f : (x : A × B) → C x) = fun (x : A × B) ↦ f x.1 x.2 := rfl
 
 lemma principle6 (f : (x : A × B) → C x) : f = fun (x : A × B) ↦ f (x.1, x.2) := rfl
+
+end
+
+end
+
+-- DEPENDENT PAIR
+
+variable (A : Type u) (B : A → Type u)
+
+-- Formation rule
+
+open Sigma
+
+section
+
+variable (a : A) (b : B a)
+
+#check Σ (a : A), B a 
+
+#check (a : A) × B a
+
+-- Constructor
+
+#check (⟨a, b⟩ : Σ (a : A), B a)
+
+#check (⟨a, b⟩ : (a : A) × B a)
+
+-- Eliminator
+
+variable (x : (a : A) × B a) (C : Type u) (f : (a : A) → (B a → C))
+  
+#check ((rec f : ((a : A) × B a) → C) x)
+
+#check (rec f : ((a : A) × B a) → C)
+
+-- Computation rule
+
+example : rec f (⟨a, b⟩ : (a : A) × B a) = f a b := rfl
+
+example : (⟨a, b⟩ : (a : A) × B a).1 = a := rfl
+
+-- Uniqueness principle
+
+section
+
+example : x = ⟨x.1, x.2⟩ := rfl
+
+lemma principle7 : (rec f : ((a : A) × B a) → C) = fun (x : (a : A) × B a) ↦ f x.1 x.2 := rfl
+
+end
+
+-- Eliminator (dependent version)
+
+section
+
+variable (C : (a : A) × B a → Type u) (f : (a : A) → (b : B a) → C ⟨a, b⟩) (x : (a : A) × B a)
+
+#check (rec f x : C x)
+
+#check (rec f : (x : (a : A) × B a) → C x)
+
+noncomputable --ignore this
+def function2 := fun (x : (a : ℕ) × ℝ^a ) ↦ (x.1 • x.2) 
+
+#check (function2 : (x : (a : ℕ) × ℝ^a) → ℝ^x.1)
+
+-- Computation rule
+
+example (a : A) (b : B a) : rec f (⟨a, b⟩ : (a : A) × B a) = f a b := rfl 
+
+lemma principle8 : (rec f : (x : (a : A) × B a) → C x) = fun (x : (a : A) × B a) ↦ f x.1 x.2 := rfl
+
+lemma principle9 (f : (x : (a : A) × B a) → C x) : f = fun (x : (a : A) × B a) ↦ f ⟨x.1, x.2⟩ := rfl
 
 end
 
