@@ -46,7 +46,7 @@ example (a : ℝ) : (fun x ↦ sin x) a = sin a := rfl
 
 example : f = fun x ↦ f x := rfl
 
-lemma extensionality (g : A → B) (h : ∀ (x : A), f a = f b) : f = g := sorry
+lemma extensionality (g : A → B) (h : ∀ (x : A), f x = g x) : f = g := sorry
 
 #print axioms extensionality
 
