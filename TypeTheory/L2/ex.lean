@@ -72,11 +72,13 @@ section
 
 section
 
-variable (n : ℕ)
+variable (n : ℕ) (A : Type u) (B : A → Type u)
 
 #check ℝ^n
 
 #check (n : ℕ) → ℝ^n
+
+#check ((x : A) → B x)
 
 -- Constructor
 
@@ -162,6 +164,8 @@ example (a : A) (b : B) : rec f (a, b) = f a b := rfl
 
 #check (snd x)
 
+example : (fst : A × B → A) = rec (fun a b ↦ a) := rfl
+
 example : fst (a, b) = a := rfl
 
 end
@@ -185,8 +189,7 @@ lemma principle1 (f : A → B → C) : (rec f : A × B → C) = fun (x : A × B)
 #print axioms principle1
 
 lemma principle2 (f : A → B → C) : (rec f : A × B → C) = fun (x : A × B) ↦ f x.1 x.2 := by
-  have h₁ : f = fun t ↦ f t := rfl
-  nth_rewrite 2 [h₁]
+  change (fun (t : A × B) ↦ (rec f : A × B → C) (t.1, t.2)) = _
   change (fun (t : A × B) ↦ f t.1 t.2) = _
   rfl
 
@@ -197,7 +200,8 @@ lemma principle3 (f : A × B → C) : f = fun (x : A × B) ↦ f (x.1, x.2) := r
 #print axioms principle3
 
 lemma principle4 (f : A × B → C) : f = fun (x : A × B) ↦ f (x.1, x.2) := by
-  change (fun t ↦ f t) = fun x ↦ f x
+  change (fun t ↦ f t) = fun (x : A × B) ↦ f (x.1, x.2)
+  change (fun t ↦ f t) = fun (x : A × B) ↦ f x
   rfl
 
 #print axioms principle4
@@ -275,6 +279,8 @@ example : x = ⟨x.1, x.2⟩ := rfl
 
 lemma principle7 : (rec f : ((a : A) × B a) → C) = fun (x : (a : A) × B a) ↦ f x.1 x.2 := rfl
 
+lemma principle8 (f : ((a : A) × B a) → C) : f = fun (x : (a : A) × B a) ↦ f ⟨x.1, x.2⟩ := rfl
+
 end
 
 -- Eliminator (dependent version)
@@ -296,9 +302,9 @@ def function2 := fun (x : (a : ℕ) × ℝ^a ) ↦ (x.1 • x.2)
 
 example (a : A) (b : B a) : rec f (⟨a, b⟩ : (a : A) × B a) = f a b := rfl 
 
-lemma principle8 : (rec f : (x : (a : A) × B a) → C x) = fun (x : (a : A) × B a) ↦ f x.1 x.2 := rfl
+lemma principle9 : (rec f : (x : (a : A) × B a) → C x) = fun (x : (a : A) × B a) ↦ f x.1 x.2 := rfl
 
-lemma principle9 (f : (x : (a : A) × B a) → C x) : f = fun (x : (a : A) × B a) ↦ f ⟨x.1, x.2⟩ := rfl
+lemma principle10 (f : (x : (a : A) × B a) → C x) : f = fun (x : (a : A) × B a) ↦ f ⟨x.1, x.2⟩ := rfl
 
 end
 
