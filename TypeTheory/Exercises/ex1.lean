@@ -250,6 +250,9 @@ example (P Q : Prop) : P → P ∨ Q := by
 example (P Q : Prop) : (P ∧ Q) ↔ (Q ∧ P) := by
   sorry
 
+/- Write down (with pen and paper) the introduction rule, constructors etc for the "if and only if
+operator". -/
+
 example (P Q : Prop) : P → Q → P := by
   sorry
 
