@@ -285,4 +285,7 @@ following. You may need the `rw` and `apply` tactics. -/
 example (h : ∃ (n : ℕ), 0 = n ∧ 1 = n) : False := by
   sorry
 
+example : ¬(∃ (n : ℕ), 0 = n ∧ 1 = n) := by
+  sorry
+
 end logic
