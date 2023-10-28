@@ -116,7 +116,7 @@ a pair `(A, L)` to the proposition saying that `L` is empty. -/
 
 /- Do the last two questions in the Cartesian_product section for the dependent pairs type. -/
 
-/- It `(n : ℕ)`, then `(0 : ℝ^n)` is the zero vector with `n` components. Define the function, from
+/- If `(n : ℕ)`, then `(0 : ℝ^n)` is the zero vector with `n` components. Define the function, from
 `ℕ` to `(n : ℕ) × ℝ^n`, that sends `n` to the pair `(n, 0)`, where the `0` in the second component
 is the zero vectors with `2*n` component. -/
 
