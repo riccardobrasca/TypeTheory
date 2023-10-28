@@ -18,4 +18,4 @@ If you want to work with a file make a copy and work on it, not on the original 
 
 Each folder contains a file `pres.pdf` with the slides I used during the talk. For example, the slides for the first lecture are in `TypeTheory/L1/pres.pdf`.
 
-In the folder `TypeTheory/Exercises` you will find the exercises sheets.
+In the folder `TypeTheory/Exercises` you will find the exercises sheets and in `TypeTheory/Exercises/Solutions` the answers.
