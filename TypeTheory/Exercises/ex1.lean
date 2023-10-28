@@ -118,7 +118,7 @@ a pair `(A, L)` to the proposition saying that `L` is empty. -/
 
 /- If `(n : ℕ)`, then `(0 : ℝ^n)` is the zero vector with `n` components. Define the function, from
 `ℕ` to `(n : ℕ) × ℝ^n`, that sends `n` to the pair `(n, 0)`, where the `0` in the second component
-is the zero vectors with `2*n` component. -/
+is the zero vectors with `n` component. -/
 
 end dependent_pairs
 
@@ -203,7 +203,7 @@ is that `@rfl A a : a = a` for all `(a : A)`.
 
 The strategy is the following: to prove that for all `(x : Unit)` we have `x = Unit.unit` we need to
 define a (dependent!) function that sends any `(x : Unit)` to a proof that `x = Unit.unit`. But to
-define a depedent function from `Unit` we can use the recursor! So first of all we define a function
+define a dependent function from `Unit` we can use the recursor! So first of all we define a function
 `f1 : Unit → Prop` that sends `x` to the proposition `x = Unit.unit` (this function will give the
 codomain of the dependent function we are looking for). Now, the recursor says that to build a
 function `(x : Unit) → f1 x` it is enough to specify a term of type `f1 Unit.unit`. But by definition
