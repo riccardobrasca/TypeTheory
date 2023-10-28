@@ -114,7 +114,7 @@ component is a list of element whose type is the first component? Check it in Le
 component is a type `A` and the second component is a list of elements of type `A`, that sends
 a pair `(A, L)` to the proposition saying that `L` is empty. -/
 
-/- Do the last two question in the Cartesian_product section for the dependent pairs type. -/
+/- Do the last two questions in the Cartesian_product section for the dependent pairs type. -/
 
 /- It `(n : ℕ)`, then `(0 : ℝ^n)` is the zero vector with `n` components. Define the function, from
 `ℕ` to `(n : ℕ) × ℝ^n`, that sends `n` to the pair `(n, 0)`, where the `0` in the second component
