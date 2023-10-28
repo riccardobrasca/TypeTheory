@@ -274,10 +274,11 @@ example (P Q : Prop) : ¬ P ∨ Q → P → Q := by
 example (P Q R : Prop) : P ∨ (Q ∧ R) → ¬ P → ¬ Q → False := by
   sorry
 
-/- You can use the `norm_num` tactic to prove explicit equalities between natural numbers. -/
+/- You can use the `norm_num` tactic to prove explicit relations between natural numbers. -/
 
-example : ∃ (n : ℕ), n * 2 = 25 := by
-  sorry
+example : ∃ (n : ℕ), n * 2 > 7 := by
+  use 5
+  norm_num
 
 /- Using `Nat.zero_ne_one` (you can check its type, but the name is pretty clear...) prove the
 following. You may need the `rw` and `apply` tactics. -/
