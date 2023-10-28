@@ -4,8 +4,6 @@ open scoped Real
 
 open Real
 
-notation R "^" n => (Fin n → R) -- notation to use ℝ^n as a type
-
 section basics
 
 /-Check the type of the natural number `10` and of the integers `-5` and `12`.-/
@@ -71,6 +69,8 @@ section functions_type
 end functions_type
 
 section dependent_functions
+
+notation R "^" n => (Fin n → R) -- notation to use ℝ^n as a type
 
 /- If `(n : ℕ)`, then `ℝ^n` is the type of real vectors with `n` components. Check that the type
 of dependent functions that take a natural number `n` and give a function `(ℝ^n) → (ℝ^n)` is `Type`.
