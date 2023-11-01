@@ -57,11 +57,14 @@ section eliminator
 
 variable (M : N → Sort u)
 
-variable (z : M 0) (s : Π (n : N), M n → M (succ n)) --Note that the notation `Π` works
+variable (z : M 0) (s : Π (n : N), M n → M (succ n))
+--Note that the notation `Π` works
 
-#check (rec z s : Π (n : N), M n) --here Lean is not smart enough to guess
+#check (rec z s : Π (n : N), M n)
+--here Lean is not smart enough to guess
 
-#check (rec (motive := M) z s) --one can help Lean writing `(motive := M)`
+#check (rec (motive := M) z s)
+--one can help Lean writing `(motive := M)`
 
 variable (n : N)
 
@@ -74,7 +77,8 @@ end eliminator
 
 section computation_rules
 
-variable (M : N → Sort u) (z : M 0) (s : Π (n : N), M n → M (succ n))
+variable (M : N → Sort u) (z : M 0)
+  (s : Π (n : N), M n → M (succ n))
 
 example : rec (motive := M) z s 0 = z := rfl
 
@@ -88,9 +92,11 @@ variable (A : Type u)
 
 variable (z : A) (s : N → A → A)
 
-#check (rec (motive := fun _ ↦ A) z s) --we say that the motive is the constant function `A`
+#check (rec (motive := fun _ ↦ A) z s)
+--we say that the motive is the constant function `A`
 
-#check (rec z s : N → A) --or we can help Lean like this
+#check (rec z s : N → A)
+--or we can help Lean like this
 
 example : rec z s 0 = z := rfl
 
@@ -100,7 +106,8 @@ end eliminator_type
 
 section pattern_matching
 
-variable (M : N → Sort u) (z : M 0) (s : Π (n : N), M n → M (succ n))
+variable (M : N → Sort u) (z : M 0)
+  (s : Π (n : N), M n → M (succ n))
 
 noncomputable --ignore this
 def f : Π (n : N), M n := rec z s
@@ -217,6 +224,18 @@ theorem add_comm (a b : N) : a + b = b + a := by
 theorem one_add_eq_succ (a : N) : 1 + a = succ a := by
   rw [add_comm, succ_eq_add_one]
 
+theorem add_assoc (a b c : N) : a + b + c = a + (b + c) := by
+  induction a with
+  | zero => rw [zero_def, zero_add, zero_add]
+  | _ d hd => rw [succ_add, succ_add, hd, succ_add]
+
+theorem double_eq_add_self (a : N) : double a = a + a := by
+  induction a with
+  | zero =>
+    rw [zero_def, double_zero, add_zero]
+  | _ d hd =>
+    rw [add_succ, succ_add, double_succ, hd]
+
 end addition
 
 section inj
@@ -246,7 +265,8 @@ theorem true_ne_false : True ≠ False := by
 
 theorem zero_ne_one : (0 : N) ≠ 1 := by
   intro h
-  let f : N → Prop := N.rec False (fun a b => True)
+  let f : N → Prop :=
+    N.rec False (fun a b => True)
   have hzero : f 0 = False := rfl
   have hone : f 1 = True := rfl
   rw [h, hone] at hzero
@@ -254,14 +274,16 @@ theorem zero_ne_one : (0 : N) ≠ 1 := by
 
 theorem succ_ne_zero (n : N) : succ n ≠ 0 := by
   intro h
-  let f : N → Prop := N.rec False (fun a b => True)
+  let f : N → Prop :=
+    N.rec False (fun a b => True)
   have hzero : f 0 = False := rfl
   have hn : f (succ n) = True := rfl
   rw [← h, hn] at hzero
   exact true_ne_false hzero
 
 example : ¬(∃ (n : N), succ n = 0) := by
-  rintro ⟨n, hn⟩ --this is the same as `intro n` followed by `obtain ⟨n, hn⟩ := h`
+  rintro ⟨n, hn⟩
+  --this is the same as `intro n` followed by `obtain ⟨n, hn⟩ := h`
   exact succ_ne_zero n hn
 
 end ne
