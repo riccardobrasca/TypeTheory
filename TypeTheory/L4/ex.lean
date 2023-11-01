@@ -190,7 +190,10 @@ theorem one_add_one_eq_two : 1 + 1 = two := rfl
 theorem two_add_two_eq_four : two + two = four := rfl
 
 /- The following equality is not definitional! -/
-theorem add_zero : ∀ (a : N), a + 0 = a := by
+theorem add_zero (a : N) : a + 0 = a := by
+  revert a
+  --the previous line is needed as `rec` only allows to build
+  -- a dependent function "all at once", not a single value
   apply rec
   · exact zero_add 0
   · intro a ha
