@@ -289,6 +289,17 @@ example : ¬(∃ (n : N), succ n = 0) := by
   --this is the same as `intro n` followed by `obtain ⟨n, hn⟩ := h`
   exact succ_ne_zero n hn
 
+theorem succ_ne_of_ne (a b : N) (h : a ≠ b) : succ a ≠ succ b :=
+  fun hsucc ↦ h (succ_inj _ _ hsucc)
+
+theorem one_ne_two : 1 ≠ two :=
+  succ_ne_of_ne _ _ zero_ne_one
+
+theorem two_ne_three : two ≠ three :=
+  succ_ne_of_ne _ _ one_ne_two
+
+example : 2134 ≠ 3435 := by decide
+
 end ne
 
 end N
