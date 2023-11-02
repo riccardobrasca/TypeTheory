@@ -257,6 +257,17 @@ theorem succ_inj (a b : N) (h : succ a = succ b) : a = b := by
   rw [pred_succ, pred_succ] at H
   exact H
 
+theorem add_left_cancel (a b c : N) (h : a + b = a + c) : b = c := by
+  induction a with
+  | zero => rwa [zero_def, zero_add, zero_add] at h
+  | _ d hd =>
+    rw [succ_add, succ_add] at h
+    exact hd (succ_inj _ _ h)
+
+theorem add_right_cancel (a b c : N) (h : a + b = c + b) : a = c := by
+  rw [add_comm, add_comm c] at h
+  exact add_left_cancel _ _ _ h
+
 end inj
 
 section ne
