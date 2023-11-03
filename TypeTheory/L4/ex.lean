@@ -278,6 +278,8 @@ theorem true_ne_false : True ≠ False := by
   trivial
 
 theorem zero_ne_one : (0 : N) ≠ 1 := by
+  show 0 = 1 → False
+  --this worked because it is a reformulation of the goal
   intro h
   let f : N → Prop :=
     N.rec False (fun a b => True)
