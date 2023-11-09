@@ -124,6 +124,16 @@ inductive Foo : Type where
 | zero : Foo
 | min : (Foo → Prop) → Foo --error
 
+inductive Foo' : Type where
+| zero : Foo'
+| bar : (Prop → Foo') → Foo' --works
+
+inductive Prod' (A B : Type 2) : Type
+| intro : A → B → miao A B --error
+
+inductive And' (P Q : Prop) : Type 4
+| intro : P → Q → And' P Q --works
+
 #check And.rec
 
 #check Or.rec
@@ -135,8 +145,8 @@ inductive Foo : Type where
 #check Prod.rec
 
 whatsnew in
-inductive And' (P Q : Prop) : Prop where
-| intro : P → Q → And' P Q
+inductive And'' (P Q : Prop) : Prop
+| intro : P → Q → And'' P Q
 
 whatsnew in
 inductive N' : Type where
