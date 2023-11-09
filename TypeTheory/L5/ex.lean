@@ -160,3 +160,11 @@ example (n m : N) (h : n.succ = m.succ) : n = m := by
   injection h
 
 end inductive_types
+
+section families
+
+inductive Vector' (A : Type) : N → Type u
+  | nil  : Vector' A 0
+  | cons : A → (n : N) → Vector' A n → Vector' A (n+1)
+
+end families
