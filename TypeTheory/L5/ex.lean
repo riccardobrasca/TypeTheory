@@ -5,6 +5,8 @@ section proof_irrelevance
 
 example (P : Prop) (p q : P) : p = q := rfl
 
+example (p : ∀ (n : N), 0 + n = n) : p = N.zero_add := rfl
+
 end proof_irrelevance
 
 namespace Example
@@ -129,7 +131,7 @@ inductive Foo' : Type where
 | bar : (Prop → Foo') → Foo' --works
 
 inductive Prod' (A B : Type 2) : Type
-| intro : A → B → miao A B --error
+| intro : A → B → Prod' A B --error
 
 inductive And' (P Q : Prop) : Type 4
 | intro : P → Q → And' P Q --works
