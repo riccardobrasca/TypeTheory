@@ -5,6 +5,7 @@ import TypeTheory.L4.ex
 import TypeTheory.L5.ex
 import TypeTheory.L6.ex
 import TypeTheory.L7.ex
+import TypeTheory.L8.ex
 import TypeTheory.Exercises.ex1
 import TypeTheory.Exercises.ex2
 import TypeTheory.Exercises.Solutions.sol1
