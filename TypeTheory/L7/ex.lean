@@ -4,6 +4,7 @@ universe u v
 
 open scoped Real
 open scoped PiNotation
+
 section propext
 
 #check propext
