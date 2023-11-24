@@ -3,7 +3,7 @@ import TypeTheory.L6.ex
 universe u v
 
 open scoped Real
-
+open scoped PiNotation
 section propext
 
 #check propext
@@ -40,6 +40,14 @@ example : (∀ (n : N), n + 0 = n) = (0 < π) := by
   · intro _
     exact N.add_zero
 
+example : (3 < 2) = False := by
+  apply propext
+  constructor
+  · intro h
+    linarith
+  · intro h
+    exact False.rec h
+
 end propext
 
 section quotient
@@ -49,6 +57,13 @@ section quotient
 #check Quot.mk
 
 #check Quot.ind
+
+example (A : Sort u) (R : A → A → Prop) (x : Quot R) :
+    ∃ a, Quot.mk R a = x := by
+  revert x
+  apply Quot.ind
+  intro a
+  use a
 
 #check Quot.lift
 
@@ -168,6 +183,12 @@ example (A : Sort u) : Nonempty A ↔ ∃ (_ : A), True := by
     exact ⟨a⟩
 
 #check Classical.choice
+
+example (I : Sort u) (f : I → Sort v) (H : ∀ i, Nonempty (f i)) :
+    Nonempty (Π (i : I), f i) := by
+  constructor
+  intro i
+  exact Classical.choice (H i)
 
 example (P : Prop) : P = True ∨ P = False := by
   cases em P with
